@@ -1,6 +1,4 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
-
-b1 = KeyboardButton('/start')
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 b2 = KeyboardButton('/candy')
 
 kb_menu = ReplyKeyboardMarkup(resize_keyboard=True)

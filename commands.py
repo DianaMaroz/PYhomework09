@@ -64,6 +64,7 @@ async def candy_bot(message: types.Message):
                                     f'взял {take} конфет и осталось {total}.')
                     photo = open('pictures/hitriy-getsbi.jpg', 'rb')
                     await bot.send_photo(chat_id=message.chat.id, photo=photo)
+                    await message.reply('Поиграем еще?', reply_markup=menu_key.kb_menu)
 
                 else:
                     await message.reply(f'{message.from_user.first_name}, '
@@ -79,6 +80,7 @@ async def candy_bot(message: types.Message):
                         await message.answer('ЖАЛКИЙ КОЖАНЫЙ МЕШОК! Я ПОБЕДИЛ!')
                         photo = open('pictures/terminator.jpg', 'rb')
                         await bot.send_photo(chat_id=message.chat.id, photo=photo)
+                        await message.reply('Хочешь я снова это сделаю?', reply_markup=menu_key.kb_menu)
                     else:
                         await message.answer(f'А я взял {bot_take} конфет и осталось {total}')
     else:
