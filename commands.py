@@ -39,7 +39,9 @@ async def candy_bot(message: types.Message):
                 total -= take
                 if total == 0:
                     await message.reply(f'{message.from_user.first_name}, '
-                                    f'взял {take} конфет и осталось {total}. Ты победил!')
+                                    f'взял {take} конфет и осталось {total}.')
+                    photo = open('pictures/hitriy-getsbi.jpg', 'rb')
+                    await bot.send_photo(chat_id=message.chat.id, photo=photo)
 
                 else:
                     await message.reply(f'{message.from_user.first_name}, '
@@ -51,7 +53,10 @@ async def candy_bot(message: types.Message):
                         bot_take = random.randint(1, 28)
                     total -= bot_take
                     if total == 0:
-                        await message.answer(f'А я взял {bot_take} конфет и осталось {total}. ЖАЛКИЙ КОЖАНЫЙ МЕШОК! Я ПОБЕДИЛ!')
+                        await message.answer(f'А я взял {bot_take} конфет и осталось {total}.')
+                        await message.answer('ЖАЛКИЙ КОЖАНЫЙ МЕШОК! Я ПОБЕДИЛ!')
+                        photo = open('pictures/terminator.jpg', 'rb')
+                        await bot.send_photo(chat_id=message.chat.id, photo=photo)
                     else:
                         await message.answer(f'А я взял {bot_take} конфет и осталось {total}')
 
