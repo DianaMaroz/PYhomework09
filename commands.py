@@ -1,9 +1,10 @@
 from config import dp, bot
 from aiogram import types
+from keyboards import menu_key, coin_key
 import random
 
 total = 0
-turn = 0
+
 
 @dp.message_handler(commands=['start', 'help'])
 async def start_bot(message: types.Message):
@@ -11,6 +12,7 @@ async def start_bot(message: types.Message):
     await message.reply(f'Привет, {message.from_user.first_name}!')
     print('Start')
     await message.answer("Я знаю такие команды: /help и  /start- справка по командам,  /candy игра в конфетки")
+    await message.reply('А вот и кнопочки!', reply_markup=menu_key.kb_menu)
 
 
 @dp.message_handler(commands='candy')
@@ -19,13 +21,13 @@ async def candy_start_bot(message: types.Message):
     total = 150
     print('конфетки начало')
     await message.reply(f'Привет, {message.from_user.first_name}! Давай сыграем в конфетки. На столе лежит {total} конфет. \n Можно брать от 1 до 28 за раз. Кто взял последнюю, тот и победил.')
-    await message.answer('Давай подбросим монетку. Выбирай: /орел или /решка? ')
+    await message.answer('Давай подбросим монетку. Выбирай: /орел или /решка? ', reply_markup=coin_key.kb_coin)
     #await candy_bot(message)
 
 @dp.message_handler(commands= ['орел', 'решка'])
 async def orel_reshka(message: types.Message):
-    global turn
     global total
+    total = 150
     coin_random = random.choice(['орел', 'решка'])
     await message.answer(f'Сейчас подброшу монетку! {coin_random.capitalize()}!')
     if coin_random == 'орел':
@@ -35,10 +37,8 @@ async def orel_reshka(message: types.Message):
         photo = open('pictures/pagonya.jpg', 'rb')
         await bot.send_photo(chat_id=message.chat.id, photo=photo)
     if message.text[1:] == coin_random:
-        turn = 0
         await message.reply( f'Эй, {message.from_user.first_name}! Ты ходишь первым')
     else:
-        turn = 1
         await message.reply(f'Не повезло тебе, {message.from_user.first_name}! Первым хожу я')
         bot_take = random.randint(1, 28)
         total -= bot_take
@@ -81,10 +81,6 @@ async def candy_bot(message: types.Message):
                         await bot.send_photo(chat_id=message.chat.id, photo=photo)
                     else:
                         await message.answer(f'А я взял {bot_take} конфет и осталось {total}')
-
-
-
-
     else:
         await message.reply(f'{message.from_user.first_name}, давай-ка цифрами')
 
